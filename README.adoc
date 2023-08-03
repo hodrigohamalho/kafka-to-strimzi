@@ -1,0 +1,5 @@
+= Kafka to Strimzi
+
+Project to demonstrate a migration from an cluster using Kafka to Strimzi into Openshift. 
+
+image::images/cluster-diagram.jpg[][cluster topology]
