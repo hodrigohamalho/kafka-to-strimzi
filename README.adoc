@@ -2,4 +2,87 @@
 
 Project to demonstrate a migration from an cluster using Kafka to Strimzi into Openshift. 
 
-image::images/cluster-diagram.jpg[][cluster topology]
+image::images/cluster-diagram.jpg[cluster topology]
+
+== Tracing with multiple applications.
+
+Overall tracing
+
+image::images/tracing-0.png[]
+
+Tracing detail
+
+image::images/tracing.png[]
+
+Tracing FlameGraph
+
+image::images/tracing-flamegraph.png[]
+
+image::images/tracing-flamegraph-1.png[]
+
+image::images/tracing-flamegraph-2.png[]
+
+Tracing Statistics
+
+image::images/tracing-statistics.png[]
+
+== Monitoring
+
+Grafana collect metrics from prometheus and make it available through dashboards.
+
+AMQ Streams (Strimzi) dashboard
+
+image::images/grafana-strimzi.png[]
+
+== Other toolings
+
+image::images/kafka-ui-messages.png[]
+
+== Pre requirements
+
+. JDK 11+
+. Quarkus CLI
+. Docker
+. AMQ Streams Operator
+. AMQ Grafana Operator
+. Red Hat OpenShift distributed tracing platform
+
+== Local development
+
+. Init AMQ, Jaeger: `docker compose up`
+. Artemis Console: ``` http://localhost:8161/console/ ```
+. Jaeger Console: ```http://localhost:16686/search```  
+
+To run the apps: 
+
+Inside each project:
+
+    quarkus dev
+
+== Install the project in Openshift with Ansible
+
+Install the following operators before running the playbooks:
+
+. AMQ Streams Operator
+. AMQ Broker Operator
+. AMQ Grafana Operator
+. Red Hat OpenShift distributed tracing platform
+
+NOTE: I decided to remove Operators logic from the playbooks because it looks to broke whenever there is a new version of a Operator the playbooks starts to fail (It's annoying).
+
+=== Parameters
+
+[options="header"]
+|=======================
+| Parameter      | Example Value                                      | Definition
+| tkn     | sha256~vFanQbthlPKfsaldJT3bdLXIyEkd7ypO_XPygY1DNtQ | access token for a user with cluster-admin privileges
+| server    | https://api.mycluster.opentlc.com:6443             | OpenShift Cluster API URL
+|=======================
+
+=== Deploying the demo
+----
+export tkn=sha256~x
+export server=https://api.clust2er-6x8wc.6x8wc.sandbox773.opentlc.com:6443
+
+ansible-playbook -e token=${tkn} -e server=${server} playbook.yml
+----
