@@ -1,9 +1,3 @@
-- name: Evaluate Artemis Pod Monitor
-  k8s:
-    state: present
-    namespace: '{{ namespace }}'
-    resource_definition: "{{ lookup('template', 'artemis-service-monitor.yml.j2') }}"
-
 - name: Evaluate Strimzi Pod Monitor
   k8s:
     state: present
@@ -51,14 +45,32 @@
     state: present
     resource_definition: "{{ lookup('template', 'grafana-datasource.yml.j2') }}"
 
-- name: Evaluate Artemis Dashboard
-  k8s:
-    state: present
-    namespace: '{{ namespace }}'
-    resource_definition: "{{ lookup('file', 'grafana-artemis-dashboard.yml') }}"
-
 - name: Evaluate Kafka Dashboard
   k8s:
     state: present
     namespace: '{{ namespace }}'
-    resource_definition: "{{ lookup('file', 'grafana_kafka_dashboard.yml') }}"
+    resource_definition: "{{ lookup('file', 'grafana-kafka-dashboard.yml') }}"
+
+- name: Evaluate Metrics for Mirror Maker
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    resource_definition: "{{ lookup('file', 'kafka-mirror-maker-metrics.yml') }}"
+
+- name: Evaluate Metrics for Kafka Connect
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    resource_definition: "{{ lookup('file', 'kafka-connect-metrics.yml') }}"
+
+- name: Evaluate Kafka Connect Grafana Dashboard
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    resource_definition: "{{ lookup('file', 'grafana-kafka-connect-dashboard.yml') }}"
+
+- name: Evaluate Kafka Mirror Maker 2 Grafana Dashboard
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    resource_definition: "{{ lookup('file', 'grafana-kafka-mirror-maker-dashboard.yml') }}"
