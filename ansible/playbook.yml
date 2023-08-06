@@ -28,20 +28,20 @@
           metadata:
             name: "{{ namespace }}"
 
-    # - name: Include AMQ Streams
-    #   include_role:
-    #     name: streams
+    - name: Include AMQ Streams
+      include_role:
+        name: streams
 
     - name: Include Monitoring
       include_role:
         name: monitoring
     
-    # - name: Include Applications
-    #   include_role:
-    #     name: apps
+    - name: Include Applications
+      include_role:
+        name: apps
 
-    # - name: Telemetry
-    #   include_role:
-    #     name: telemetry
+    - name: Telemetry
+      include_role:
+        name: telemetry
 
     

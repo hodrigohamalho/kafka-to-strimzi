@@ -86,3 +86,137 @@ export server=https://api.clust2er-6x8wc.6x8wc.sandbox773.opentlc.com:6443
 
 ansible-playbook -e token=${tkn} -e server=${server} playbook.yml
 ----
+
+== AMQ Streams (Kafka) on RHEL using AWS
+
+=== Creating AWS VPC
+
+Join into your EC2 instance. 
+
+image::images/aws/ec2.png[Access EC2 in AWS Console]
+
+The next, step is to create a `VPC`, so search for `VPC` in the AWS menu.
+
+image::images/aws/vpc-search.png[Search for VPC]
+
+In the VPC panel, select `Create VPC` button.
+
+image::images/aws/vpc-create.png[Create VPC]
+
+In the VPC creation options, select `VPC and more`, for allow the creation of all network related components. Leave the option as it is by default.
+
+image::images/aws/vpc-create-detail.png[Create VPC]
+
+image::images/aws/vpc-create-detail2.png[Create VPC]
+
+It created public and private networks for you. Copy the `VPC ID` and the `Subnet Id` from your public interface.
+
+VPC ID
+
+image::images/aws/vpc-id.png[Copy VPC ID]
+
+Public Subnet ID
+
+image::images/aws/subnet-id.png[Copy Subnet ID]
+
+
+=== Creating the Bastion Machine
+
+Bastion is the machine that we will use to manage the cluster. It is our pointing of contact with the Kafka environment. 
+
+In the EC2 menu, create select `Launch instance` to open the machine creation form.
+
+image::images/aws/bastion-launch-instance.png[Launch instance]
+
+Fill with the following options: 
+
+    name: bastion
+    Application and OS Images: Red Hat 
+    Instance Type: t2.large
+    Key pair: anyone that you created, if not create a new one
+    Auto assign public ip: Enable
+    Subnet: project-subnet-PUBLIC...
+    Storage: 50 GiB
+
+image::images/aws/bastion-launch-instance-1.png[Launch instance basic info]
+image::images/aws/bastion-launch-instance-2.png[Launch instance Networking]
+image::images/aws/bastion-launch-instance-3.png[Launch instance Storage]
+
+Into the details of the `bastion` machine created in the previous step. Copy the public IP.
+
+image::images/aws/bastion-detail.png[Launch instance Storage]
+
+==== Security Group
+
+Let's edit the `Security Group` to allow inbound connection from everyone (I hope that you are not in production lol)
+
+Acess your instance detailed and select `Security Group`, you must go to a screen like this one:
+
+image::images/aws/security-context-1.png[Editing Security Group]
+
+Click on `Edit inbound Rules` and add the following rule:
+
+image::images/aws/security-context-2.png[Security Group - Adding inbound rule]
+
+Copy the `Security Group ID`
+
+image::images/aws/security-context-2.png[Copying Security Group ID]
+
+==== SSH Connection 
+
+Connect via `SSH` into your bastion instance. Use the correct key and your own bastion public ip.
+
+    ssh -i ramalho.cer ec2-user@3.23.99.113
+
+=== Ansible install
+
+Once you connect in the bastion instance, run the following commands to install Ansible.
+
+   sudo su
+   yum install python-pip
+   pip install --upgrade ansible
+
+Now install the AWS collection
+
+   ansible-galaxy collection install amazon.aws
+   pip install boto3 botocore
+
+=== Preparing playbook
+
+Update the variables in the `config.yml`.
+
+Create the ansible credentials file.
+
+    cd ~
+    mkdir .aws
+    vi .aws/credentials
+
+with the content similar like this:
+
+    [default]
+    aws_access_key_id=XXXX
+    aws_secret_access_key=YYYY
+    region=us-east-1
+    output=json
+
+=== Run the playbook
+
+    cd ansible-aws
+    ansible-playbook cria-maquinas.yaml
+    ansible-playbook gerar-inventario-kafka.yaml
+
+image::images/aws/ansible-install.png[Ansible running]
+
+The playbook is imdepotent, so it failure in the installation process just run again.
+
+Is everything worked fine you should be able to see all the machines provisioned, in the console:
+
+image::images/aws/ansible-install.png[ansible-machines]
+
+You can test your ansible connectivity running
+
+ansible -i inventario_kafka.yaml -m ping all 
+
+You must receive a pong message from each server.
+
+image::images/aws/ansible-pong.png[Ansible Pong answer]

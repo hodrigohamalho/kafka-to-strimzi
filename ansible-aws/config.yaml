@@ -1,0 +1,19 @@
+aws_region: us-east-2
+aws_vpc_id: vpc-0c529c205ba81234f
+aws_sg_id: sg-0eb0338e164527237
+aws_subnet_id_dc1: subnet-0fbafe4ce311e04f5
+aws_subnet_id_dc2: subnet-0fbafe4ce311e04f5
+aws_ami_id: ami-02b8534ff4b424939
+aws_instance_type_broker: t2.xlarge
+aws_instance_type_zookeeper: t2.large
+aws_key_name: ramalho
+quantidade_brokers: 3
+quantidade_zookeepers: 3
+caminho_chave_ssh: /home/ec2-user/kafka-update-so/ramalho.cer
+caminho_arquivo_variaveis_inventario: /home/ec2-user/kafka-update-so/variaveis_inventario.ini
+caminho_inventario_kafka: /home/ec2-user/kafka-update-so/inventario_kafka.yaml
+
+#################
+# Configs Kafka #
+#################
+ssl_key_password: "teste"

@@ -1,0 +1,15 @@
+- name: Gera inventario para instalacao kafka
+  hosts: localhost
+  tasks:
+  - name: Le arquivo de configuracao
+    ansible.builtin.include_vars:
+      file: config.yaml
+
+  - name: Le arquivo de inventario
+    ansible.builtin.include_vars:
+      file: "{{ caminho_arquivo_variaveis_inventario }}"
+
+  - name: Gera inventario Kafka
+    template:
+     src: "inventario_kafka.yaml"
+     dest: "{{ caminho_inventario_kafka }}"

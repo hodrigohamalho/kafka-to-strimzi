@@ -1,0 +1,67 @@
+---
+- name: Create an EC2 instance
+  hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: Le arquivo de configuracao
+    ansible.builtin.include_vars:
+      file: config.yaml
+
+  - name: Cria Brokers
+    amazon.aws.ec2_instance:
+      name: "broker-{{ item }}"
+      key_name: "{{ aws_key_name }}"
+      vpc_subnet_id: "{{ aws_subnet_id_dc1 }}"
+      instance_type: "{{ aws_instance_type_broker }}"
+      security_group: "{{ aws_sg_id }}"
+      network:
+        assign_public_ip: true
+      image_id: "{{ aws_ami_id }}"
+      tags:
+        Environment: Testing
+    loop: "{{ range(1, quantidade_brokers + 1, 1)|list }}"
+    register: ec2_instance
+
+  - name: Gera arquivo com variaveis publicas para inventario brokers
+    lineinfile:
+      path: "{{ caminho_arquivo_variaveis_inventario }}"
+      line: "broker_{{ item.item }}: {{ item.instances[0].public_ip_address }}"
+      create: yes
+    with_items: "{{ ec2_instance.results }}"
+
+  - name: Gera arquivo com variaveis privada para inventario brokers
+    lineinfile:
+      path: "{{ caminho_arquivo_variaveis_inventario }}"
+      line: "broker_private_{{ item.item }}: {{ item.instances[0].private_dns_name }}"
+      create: yes
+    with_items: "{{ ec2_instance.results }}"
+
+  - name: Cria Zookeepers
+    amazon.aws.ec2_instance:
+      name: "zookeeper-{{ item }}"
+      key_name: "{{ aws_key_name }}"
+      vpc_subnet_id: "{{ aws_subnet_id_dc1 }}"
+      instance_type: "{{ aws_instance_type_zookeeper }}"
+      security_group: "{{ aws_sg_id }}"
+      network:
+        assign_public_ip: true
+      image_id: "{{ aws_ami_id }}"
+      tags:
+        Environment: Testing
+    loop: "{{ range(1, quantidade_zookeepers + 1, 1)|list }}"
+    register: ec2_instance_zoo
+
+  - name: Gera arquivo com variaveis publicas para inventario zookeepers
+    lineinfile:
+      path: "{{ caminho_arquivo_variaveis_inventario }}"
+      line: "zookeeper_{{ item.item }}: {{ item.instances[0].public_ip_address }}"
+      create: yes
+    with_items: "{{ ec2_instance_zoo.results }}" 
+
+
+  - name: Gera arquivo com variaveis privadas para inventario zookeepers
+    lineinfile:
+      path: "{{ caminho_arquivo_variaveis_inventario }}"
+      line: "zookeeper_private_{{ item.item }}: {{ item.instances[0].private_dns_name }}"
+      create: yes
+    with_items: "{{ ec2_instance_zoo.results }}" 
