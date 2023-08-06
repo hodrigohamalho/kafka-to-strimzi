@@ -211,11 +211,11 @@ The playbook is imdepotent, so it failure in the installation process just run a
 
 Is everything worked fine you should be able to see all the machines provisioned, in the console:
 
-image::images/aws/ansible-install.png[ansible-machines]
+image::images/aws/ansible-machines.png[ansible-machines]
 
 You can test your ansible connectivity running
 
-ansible -i inventario_kafka.yaml -m ping all 
+    ansible -i inventario_kafka.yaml -m ping all 
 
 You must receive a pong message from each server.
 
