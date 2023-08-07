@@ -220,3 +220,25 @@ You can test your ansible connectivity running
 You must receive a pong message from each server.
 
 image::images/aws/ansible-pong.png[Ansible Pong answer]
+
+
+Creating a topic 
+
+./kafka-topics --bootstrap-server ip-10-0-8-227.us-east-2.compute.internal:9092 --create --topic camel-book --partitions 4
+
+Producing Messages 
+
+    ./kafka-producer-perf-test --topic camel-book --num-records 100 --throughput 500 --record-size 512 --producer.config=producer.config
+
+producer.config
+
+    bootstrap.servers=3.137.187.50:9092
+    acks=all
+    max.in.flight.requests.per.connection=1
+    batch.size=65536
+    compression.type=lz4
+    linger.ms=5
+
+Consuming messages
+
+    ./kafka-consumer-perf-test --group test  --print-metrics --show-detailed-stats --topic camel-book --messages 100 --bootstrap-server 3.137.187.50:9092
