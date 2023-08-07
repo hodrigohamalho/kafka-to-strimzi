@@ -4,36 +4,6 @@ Project to demonstrate a migration from an cluster using Kafka to Strimzi into O
 
 image::images/cluster-diagram.jpg[cluster topology]
 
-== Tracing with multiple applications.
-
-Overall tracing
-
-image::images/tracing-0.png[]
-
-Tracing detail
-
-image::images/tracing.png[]
-
-Tracing FlameGraph
-
-image::images/tracing-flamegraph.png[]
-
-image::images/tracing-flamegraph-1.png[]
-
-image::images/tracing-flamegraph-2.png[]
-
-Tracing Statistics
-
-image::images/tracing-statistics.png[]
-
-== Monitoring
-
-Grafana collect metrics from prometheus and make it available through dashboards.
-
-AMQ Streams (Strimzi) dashboard
-
-image::images/grafana-strimzi.png[]
-
 == Other toolings
 
 image::images/kafka-ui-messages.png[]
