@@ -1,0 +1,50 @@
+# .ansible-lint
+exclude_paths:
+  - .cache/
+  - .github/
+  - molecule/
+  - .ansible-lint
+  - .yamllint
+  - playbooks/roles/
+
+rulesdir:
+   - ../../ansible-lint-custom-rules/rules/
+
+enable_list:
+  - fqcn-builtins  # opt-in
+  - no-log-password  # opt-in
+
+warn_list:
+  - role_vars_start_with_role_name
+  - vars_in_vars_files_have_valid_names
+  - experimental
+  - ignore-errors
+  - no-handler
+  - fqcn-builtins
+  - no-log-password
+  - jinja[spacing]
+  - jinja[invalid]
+  - meta-no-tags
+  - name[casing]
+  - fqcn[action]
+  - no-jinja-nesting
+  - no-changed-when
+  - schema[arg_specs]
+  - schema[meta]
+  - schema[role-arg-spec]
+  - galaxy[version-incorrect]
+  - risky-file-permissions
+  - var-naming[no-role-prefix]
+  - name[play]
+  - key-order[task]
+  - schema[tasks]
+  - name[missing]
+
+skip_list:
+  - vars_should_not_be_used
+  - file_is_small_enough
+  - name[template]
+  - task_has_valid_name
+
+use_default_rules: true
+parseable: true

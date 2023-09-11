@@ -1,0 +1,127 @@
+ancestor: 0.0.0
+releases:
+  0.0.1:
+    changes:
+      major_changes:
+      - 'Basic deployment of both Zookeeper and Brokers as systemd service on target
+        `#2 <https://github.com/ansible-middleware/amq_streams/pull/2>`_
+
+        '
+      - 'Basic deployment of both Zookeeper and Brokers as systemd service on target
+        `#2 <https://github.com/ansible-middleware/amq_streams/pull/2>`_
+
+        '
+      - 'Basic deployment of both Zookeeper and Brokers as systemd service on target
+        `#2 <https://github.com/ansible-middleware/amq_streams/pull/2>`_
+
+        '
+      - 'Basic deployment of both Zookeeper and Brokers as systemd service on target
+        `#2 <https://github.com/ansible-middleware/amq_streams/pull/2>`_
+
+        '
+      - 'Basic deployment of both Zookeeper and Brokers as systemd service on target
+        `#2 <https://github.com/ansible-middleware/amq_streams/pull/2>`_
+
+        '
+    fragments:
+    - 2.yaml
+    - 2.yaml
+    - 2.yaml
+    - 2.yaml
+    - 2.yaml
+    release_date: '2023-02-16'
+  0.0.2:
+    changes:
+      bugfixes:
+      - 'Fixup invalid varnames `#4 <https://github.com/ansible-middleware/amq_streams/pull/4>`_
+
+        '
+    fragments:
+    - 4.yaml
+    release_date: '2023-03-09'
+  0.0.3:
+    changes:
+      major_changes:
+      - 'Enable Broker Authentication usign SASL mechanism `#43 <https://github.com/ansible-middleware/amq_streams/pull/43>`_
+
+        '
+      - 'Enable Zookeeper authentication `#42 <https://github.com/ansible-middleware/amq_streams/pull/42>`_
+
+        '
+      - 'Manage topics in a Kafka authenticated broker `#60 <https://github.com/ansible-middleware/amq_streams/pull/60>`_
+
+        '
+      minor_changes:
+      - 'Add a molecule scenario for all_auth `#61 <https://github.com/ansible-middleware/amq_streams/pull/61>`_
+
+        '
+      - 'Declare Java Heap options as variables `#48 <https://github.com/ansible-middleware/amq_streams/pull/48>`_
+
+        '
+      - 'Set up KAFKA environment variables for the service execution `#54 <https://github.com/ansible-middleware/amq_streams/pull/54>`_
+
+        '
+      - 'Validate the odd number of Zookeeper instances of the cluster `#12 <https://github.com/ansible-middleware/amq_streams/pull/12>`_
+
+        '
+      - 'all jvm and servers args for zookeeper and broker can be overriden thru Ansible
+        `#13 <https://github.com/ansible-middleware/amq_streams/pull/13>`_
+
+        '
+      - "\u2B06\uFE0F Upgrade to Kafka 3.4.0 `#59 <https://github.com/ansible-middleware/amq_streams/pull/59>`_\n"
+      - "\U0001F41B Add zk inventory group var into broker role `#46 <https://github.com/ansible-middleware/amq_streams/pull/46>`_\n"
+      - "\U0001F49A Update topic management in test playbooks `#67 <https://github.com/ansible-middleware/amq_streams/pull/67>`_\n"
+      - "\U0001F4E6 Use archive site to download any version `#41 <https://github.com/ansible-middleware/amq_streams/pull/41>`_\n"
+    fragments:
+    - 12.yaml
+    - 13.yaml
+    - 41.yaml
+    - 42.yaml
+    - 43.yaml
+    - 46.yaml
+    - 48.yaml
+    - 54.yaml
+    - 59.yaml
+    - 60.yaml
+    - 61.yaml
+    - 67.yaml
+    release_date: '2023-07-26'
+  0.0.4:
+    changes:
+      major_changes:
+      - ':closed_lock_with_key: Enable secured connection from Kafka Connect `#76
+        <https://github.com/ansible-middleware/amq_streams/pull/76>`_
+
+        '
+      - ':lock: Enable SSL listeners for Kafka Brokers `#70 <https://github.com/ansible-middleware/amq_streams/pull/70>`_
+
+        '
+      - ':memo: How to enable TLS encryption `#74 <https://github.com/ansible-middleware/amq_streams/pull/74>`_
+
+        '
+      - "\u2705 Add test for SSL listeners with SASL authentication `#73 <https://github.com/ansible-middleware/amq_streams/pull/73>`_\n"
+      minor_changes:
+      - 'Mol all cluster `#78 <https://github.com/ansible-middleware/amq_streams/pull/78>`_
+
+        '
+      - 'ensure required information for auth are passed `#79 <https://github.com/ansible-middleware/amq_streams/pull/79>`_
+
+        '
+    fragments:
+    - 70.yaml
+    - 73.yaml
+    - 74.yaml
+    - 76.yaml
+    - 78.yaml
+    - 79.yaml
+    release_date: '2023-08-08'
+  0.0.5:
+    changes:
+      minor_changes:
+      - 'add remote_src attribute to unarchive: to allow deployment using archive
+        on target `#80 <https://github.com/ansible-middleware/amq_streams/pull/80>`_
+
+        '
+    fragments:
+    - 80.yaml
+    release_date: '2023-08-09'
